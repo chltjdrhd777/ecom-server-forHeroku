@@ -39,33 +39,27 @@ const register = (req: CustomAdminRequest, res: Response) => {
 };
 
 const login = (req: CustomAdminRequest, res: Response) => {
-  Admin.findOne({ email: req.body.email }, null, null, (err, targetAdmin) => {
+  Admin.findOne({ email: req.body.email }, null, null, async (err, targetAdmin) => {
     //conditions/////
     if (err) return res.status(400).json({ success: false, message: "cannot find admin" });
 
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
-    //after/////
-    if (targetAdmin) {
-      bcrypt.compare(req.body.password, targetAdmin.password, (err, same) => {
-        if (err) return res.status(400).json({ targetAdmin });
+    try {
+      await targetAdmin.authentification(req.body.password).then((isEqual) => {
+        if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
 
-        return res.status(200).json(same);
+        const token = jwt.sign({ _id: targetAdmin._id, role: targetAdmin.role }, process.env.JWT_SECRET, { expiresIn: "3d" });
+        targetAdmin.token = token;
+        targetAdmin.save();
+        let expireDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 3);
+        res
+          .cookie("authorized_admin", token, { expires: expireDate })
+          .status(200)
+          .json({ success: true, message: "login complete and token updated", targetAdmin });
       });
-    }
-
-    /*     targetAdmin.authentification(req.body.password).then((isEqual) => {
-      if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
-
-      const token = jwt.sign({ _id: targetAdmin._id, role: targetAdmin.role }, process.env.JWT_SECRET, { expiresIn: "3d" });
-      targetAdmin.token = token;
-      targetAdmin.save();
-      let expireDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 3);
-      res
-        .cookie("authorized_admin", token, { expires: expireDate })
-        .status(200)
-        .json({ success: true, message: "login complete and token updated", targetAdmin });
-    }); */
+    } catch (err) {}
+    //after/////
   });
 };
 
