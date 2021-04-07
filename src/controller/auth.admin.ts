@@ -46,7 +46,8 @@ const login = (req: CustomAdminRequest, res: Response) => {
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
     try {
-      await targetAdmin.authentification(req.body.password).then((isEqual) => {
+      return res.status(200).json({ targetAdmin });
+      /*  await targetAdmin.authentification(req.body.password).then((isEqual) => {
         if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
 
         const token = jwt.sign({ _id: targetAdmin._id, role: targetAdmin.role }, process.env.JWT_SECRET, { expiresIn: "3d" });
@@ -57,8 +58,10 @@ const login = (req: CustomAdminRequest, res: Response) => {
           .cookie("authorized_admin", token, { expires: expireDate })
           .status(200)
           .json({ success: true, message: "login complete and token updated", targetAdmin });
-      });
-    } catch (err) {}
+      }); */
+    } catch (err) {
+      return res.status(400).json({ err });
+    }
     //after/////
   });
 };
