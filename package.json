@@ -12,16 +12,15 @@
     "dep": "git add . && git commit -m Heroku && git push origin master"
   },
   "dependencies": {
-    "@types/bcrypt": "^3.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.9",
     "@types/express": "^4.0.36",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
-    "@types/node": "^8.0.16",
     "@types/multer": "^1.4.5",
+    "@types/node": "^8.0.16",
     "@types/shortid": "0.0.29",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^3.5.0",
     "cookie-parser": "^1.4.5",
