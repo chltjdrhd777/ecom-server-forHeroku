@@ -7,7 +7,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --exec ts-node src/server.ts",
-    "con": "concurrently \"npm run dev\" \"cd ../admin-app && npm run start\" \"cd ../flipkart && npm run start\""
+    "con": "concurrently \"npm run dev\" \"cd ../admin-app && npm run start\" \"cd ../flipkart && npm run start\"",
+    "dep": "git add . && git commit -m Heroku && git push origin master"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
