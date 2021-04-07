@@ -39,7 +39,8 @@ const register = (req: CustomAdminRequest, res: Response) => {
 
 const login = (req: CustomAdminRequest, res: Response) => {
   Admin.findOne({ email: req.body.email }, null, null, (err, targetAdmin) => {
-    //conditions/////
+    console.log(targetAdmin);
+    /*     //conditions/////
     if (err) return res.status(400).json({ success: false, message: "cannot find admin" });
 
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
@@ -56,7 +57,7 @@ const login = (req: CustomAdminRequest, res: Response) => {
         .cookie("authorized_admin", token, { expires: expireDate })
         .status(200)
         .json({ success: true, message: "login complete and token updated", targetAdmin });
-    });
+    }); */
   });
 };
 
