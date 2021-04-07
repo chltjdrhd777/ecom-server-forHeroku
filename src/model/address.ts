@@ -40,7 +40,7 @@ export interface Address_DocumentType_forFront {
   recentelyUsed?: boolean;
 }
 
-const address_SchemaDefinition: SchemaDefinition = {
+const address_SchemaDefinition = {
   name: {
     type: String,
     required: true,
@@ -126,33 +126,3 @@ const userAddress = new mongoose.Schema<UserAddress_DocumentType, Model<UserAddr
   timestamps: true,
 });
 export default mongoose.model("Address", userAddress);
-
-//# below is the conetent of a test about how to use subDocument with typescript
-/* 
-interface Test2 extends Document {
-  name: string;
-}
-
-interface Test extends Document {
-  docArr: [{ name: string }];
-  singleNested: Schema<Test2, Model<Test2>> & Types.EmbeddedDocument;
-}
-
-const schema: Schema<Test, Model<Test>> = new Schema({
-  docArr: [{ name: String }],
-  singleNested: new Schema({ name: String }),
-});
-
-//# schema = {...new Schema methods}
-
-const Models = mongoose.model("Test", schema);
-
-//# mongoose.model => function()=> returns {new, ...model methods}
-
-const testDoc = new Models({
-  docArr: [{ name: "test1 without methods" }],
-  singleNested: { name: "test2 with methods" },
-});
-
-
- */
