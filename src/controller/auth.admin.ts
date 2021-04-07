@@ -38,10 +38,9 @@ const register = (req: CustomAdminRequest, res: Response) => {
 };
 
 const login = (req: CustomAdminRequest, res: Response) => {
-  res.status(200).json({ message: "work" });
-
   Admin.findOne({ email: req.body.email }, null, null, (err, targetAdmin) => {
-    res.status(200).json({ targetAdmin });
+    if (targetAdmin) return res.status(200).json({ targetAdmin });
+    else return res.status(200).json({ message: "work" });
     /*      //conditions/////
     if (err) return res.status(400).json({ success: false, message: "cannot find admin" });
 
