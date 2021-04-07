@@ -39,12 +39,18 @@ const register = (req: CustomAdminRequest, res: Response) => {
 };
 
 const login = (req: CustomAdminRequest, res: Response) => {
-  Admin.findOne({ email: req.body.email }, null, null, (err, targetAdmin) => {
+  Admin.findOne({ email: req.body.email }, null, null, async (err, targetAdmin) => {
     //conditions/////
     if (err) return res.status(400).json({ success: false, message: "cannot find admin" });
 
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
+    try {
+      const response = targetAdmin.authentification(req.body.password);
+      res.status(200).json({ response });
+    } catch (err) {
+      res.status(400).json(err);
+    }
     targetAdmin.authentification(req.body.password).then((isEqual) => {
       if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
       return res.status(200).json({ isEqual });
