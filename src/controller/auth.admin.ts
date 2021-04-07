@@ -48,7 +48,7 @@ const login = (req: CustomAdminRequest, res: Response) => {
     //after/////
     if (targetAdmin) {
       bcrypt.compare(req.body.password, targetAdmin.password, (err, same) => {
-        if (err) return res.status(400).json({ err });
+        if (err) return res.status(400).json({ targetAdmin });
 
         return res.status(200).json(same);
       });
