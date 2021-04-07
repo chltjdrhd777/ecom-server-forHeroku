@@ -47,8 +47,12 @@ const login = (req: CustomAdminRequest, res: Response) => {
 
     try {
       /*    const response = await targetAdmin.authentification(req.body.password); */
-      const response2 = await bcrypt.compare(req.body.password, targetAdmin.password);
-      res.status(200).json({ response2 });
+      /*  const response2 = await bcrypt.compare(req.body.password, targetAdmin.password);
+      res.status(200).json({ response2 }); */
+      await bcrypt.compare(req.body.password, targetAdmin.password, (err, same) => {
+        if (err) return res.status(400).json("cannot compare");
+        return res.status(200).json(same);
+      });
     } catch (err) {
       res.status(400).json({ message: "something wrong" });
     }
