@@ -46,7 +46,11 @@ const login = (req: CustomAdminRequest, res: Response) => {
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
     try {
-      return res.status(200).json({ targetAdmin });
+      await bcrypt.compare(req.body.password, targetAdmin.password).then((isEqual) => {
+        if (isEqual) return res.status(200).json({ isEqual, targetAdmin });
+        return res.status(400).json({ message: "err" });
+      });
+
       /*  await targetAdmin.authentification(req.body.password).then((isEqual) => {
         if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
 
