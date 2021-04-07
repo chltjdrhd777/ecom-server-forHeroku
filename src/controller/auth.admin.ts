@@ -46,7 +46,11 @@ const login = (req: CustomAdminRequest, res: Response) => {
 
     //after/////
     targetAdmin.authentification(req.body.password).then((isEqual) => {
-      res.status(200).json({ isEqual });
+      try {
+        res.status(200).json({ isEqual });
+      } catch (err) {
+        res.status(400).json(err);
+      }
       /*    if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
     
      
