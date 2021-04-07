@@ -11,7 +11,6 @@ export interface CustomProductRequest extends Request<{}, {}, ProductBaseDocumen
 }
 
 const createProduct = (req: CustomProductRequest, res: Response) => {
-  /*  res.status(200).json({ files: req.files, admin: req.adminData, body: req.body }); */
   const { name, price, description, category, quantity } = req.body;
 
   let productPictures = [] as { img: string }[];
