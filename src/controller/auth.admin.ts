@@ -44,10 +44,10 @@ const login = (req: CustomAdminRequest, res: Response) => {
 
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
-    res.status(200).json(targetAdmin);
     //after/////
-    /*  targetAdmin.authentification(req.body.password).then((isEqual) => {
-      if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
+    targetAdmin.authentification(req.body.password).then((isEqual) => {
+      res.status(200).json({ isEqual });
+      /*    if (!isEqual) return res.status(400).json({ success: false, message: "wrong password" });
     
      
       const token = jwt.sign({ _id: targetAdmin._id, role: targetAdmin.role }, process.env.JWT_SECRET, { expiresIn: "3d" });
@@ -57,8 +57,8 @@ const login = (req: CustomAdminRequest, res: Response) => {
       res
         .cookie("authorized_admin", token, { expires: expireDate })
         .status(200)
-        .json({ success: true, message: "login complete and token updated", targetAdmin });
-    }); */
+        .json({ success: true, message: "login complete and token updated", targetAdmin }); */
+    });
   });
 };
 
