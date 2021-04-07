@@ -45,19 +45,10 @@ const login = (req: CustomAdminRequest, res: Response) => {
 
     if (!targetAdmin) return res.status(400).json({ success: false, message: "no admin" });
 
-    try {
-      /*    const response = await targetAdmin.authentification(req.body.password); */
-      /*  const response2 = await bcrypt.compare(req.body.password, targetAdmin.password);
-      res.status(200).json({ response2 }); */
-      await bcrypt.compare(req.body.password, targetAdmin.password, (err, same) => {
-        if (err) return res.status(400).json("cannot compare");
-        return res.status(200).json(same);
-      });
-    } catch (err) {
-      res.status(400).json({ message: "something wrong" });
-    }
+    targetAdmin.authentification(req.body.password).then((isEqual) => {
+      res.status(200).json({ isEqual });
+      /*      if(!isEqual) return res.status(400).json({message:"wrong password"});
 
-    /*     targetAdmin.authentification(req.body.password).then((isEqual) => {
       const token = jwt.sign({ _id: targetAdmin._id, role: targetAdmin.role }, process.env.JWT_SECRET, { expiresIn: "3d" });
       targetAdmin.token = token;
       targetAdmin.save();
@@ -65,8 +56,8 @@ const login = (req: CustomAdminRequest, res: Response) => {
       res
         .cookie("authorized_admin", token, { expires: expireDate })
         .status(200)
-        .json({ success: true, message: "login complete and token updated", targetAdmin });
-    }); */
+        .json({ success: true, message: "login complete and token updated", targetAdmin }); */
+    });
   });
 };
 
