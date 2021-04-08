@@ -55,7 +55,7 @@ const login = (req: CustomUserRequest, res: Response) => {
       targetUser.save();
       let expireDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 3);
       res
-        .cookie("authorized_user", token, { expires: expireDate })
+        .cookie("authorized_user", token, { expires: expireDate, secure: true, sameSite: true })
         .status(200)
         .json({ success: true, message: "login complete and token updated", targetUser });
     });

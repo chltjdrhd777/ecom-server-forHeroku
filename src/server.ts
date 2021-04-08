@@ -17,7 +17,7 @@ import addressRoutes from "./routes/addressRoutes";
 
 //initializing app
 const app = express();
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: "https://ecom-front-test.herokuapp.com", credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieparser());
