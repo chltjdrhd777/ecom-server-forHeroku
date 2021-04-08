@@ -1,6 +1,6 @@
 import { UserBaseDocumentType } from "./../model/UserModel";
 import slugify from "slugify";
-import { ProductBaseDocumentType } from "../model/product";
+import product, { ProductBaseDocumentType } from "../model/product";
 import { Request, Response } from "express";
 import Product from "../model/product";
 import Category from "../model/category";
@@ -39,12 +39,6 @@ const createProduct = (req: CustomProductRequest, res: Response) => {
     console.log(doc);
     return res.status(200).json({ doc });
   });
-
-  /*   product.save(undefined, (err, doc) => {
-    if (err) return res.status(400).json({ success: false, err });
-
-    res.status(200).json({ success: true, doc });
-  }); */
 };
 
 const getProduct = (req: Request, res: Response) => {
@@ -55,17 +49,11 @@ const getProduct = (req: Request, res: Response) => {
   } catch (err) {
     if (err) return res.status(400).json({ success: false, message: "bed request" });
   }
-  /*   Product.find({}, (err, docs) => {
-    if (err) return res.status(400).json({ success: false, message: "can't get product lists" });
-
-    res.status(200).json({ success: true, productList: docs });
-  }); */
 };
 
 const getProductBySlug = (req: Request, res: Response) => {
   const { slug } = req.params;
-  res.status(200).json(slug);
-  /* 
+
   Category.findOne({ slug: slug })
     .select("_id")
     .exec((err, target) => {
@@ -98,7 +86,7 @@ const getProductBySlug = (req: Request, res: Response) => {
           }
         });
       }
-    }); */
+    });
 };
 
 const getProductById = (req: Request, res: Response) => {
@@ -112,4 +100,11 @@ const getProductById = (req: Request, res: Response) => {
   }
 };
 
-export { createProduct, getProduct, getProductBySlug, getProductById };
+const deleteProduct = (req: Request, res: Response) => {
+  Product.findOneAndDelete({ _id: req.body._id }, null, (err, result) => {
+    if (err) return res.status(400).json({ message: "err" });
+    return res.status(200).json({ result });
+  });
+};
+
+export { createProduct, getProduct, getProductBySlug, getProductById, deleteProduct };
