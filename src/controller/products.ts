@@ -64,7 +64,8 @@ const getProduct = (req: Request, res: Response) => {
 
 const getProductBySlug = (req: Request, res: Response) => {
   const { slug } = req.params;
-
+  res.status(200).json(slug);
+  /* 
   Category.findOne({ slug: slug })
     .select("_id")
     .exec((err, target) => {
@@ -97,7 +98,7 @@ const getProductBySlug = (req: Request, res: Response) => {
           }
         });
       }
-    });
+    }); */
 };
 
 const getProductById = (req: Request, res: Response) => {
