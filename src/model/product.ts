@@ -54,10 +54,10 @@ const productSchema: Schema<ProductBaseDocumentType, ProductStatics> = new mongo
 //pre
 
 //methods and statics
-
+/* 
 productSchema.statics.generatePublicURL = function (query: string) {
   return `http://localhost:8080/${query}`;
-};
+}; */
 
 //export
 export default mongoose.model<ProductBaseDocumentType, ProductStatics>("Product", productSchema);

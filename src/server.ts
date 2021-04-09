@@ -14,10 +14,12 @@ import productRoutes from "./routes/productRoutes";
 import cartRoutes from "./routes/cartRoutes";
 import pageRoutes from "./routes/pageRoutes";
 import addressRoutes from "./routes/addressRoutes";
+import paymentRoutes from "./routes/paymentRoutes";
 
 //initializing app
 const app = express();
-app.use(cors({ origin: "https://ecom-front-test.herokuapp.com", credentials: true }));
+/* app.use(cors({ origin: "https://ecom-front-test.herokuapp.com", credentials: true })); */
+app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieparser());
@@ -53,6 +55,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/page", pageRoutes);
 app.use("/api/address", addressRoutes);
+app.use("/api/payment", paymentRoutes);
 //PORT
 app.listen(process.env.PORT || 8080, () => {
   console.log(`listening port : ${process.env.PORT}`);
